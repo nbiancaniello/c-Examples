@@ -1,0 +1,100 @@
+//archivos de cabercera
+#include <stdio.h>
+#include <conio.h>
+#include <string.h>
+//fin de archivos de cabecera
+
+//definici¢n de la estructura de registros
+struct articulo
+{
+	char codart[5];//el c¢digo es de 4. Se agrega 1 para el terminador '\0'
+	float pu;
+	};
+//fin de la definici¢n de la estructura de registros
+
+//prototipos de funciones
+void cargar_art(struct articulo * );
+void mostrar(struct articulo * );
+void ordenar_pu (struct articulo * ) ;  //ordena por el precio unitario (float)
+void ordenar_cod (struct articulo * ) ;//ordena por el c¢digo de art¡culo (string)
+//fin de prototipos de funciones
+
+void main()
+	{
+	struct articulo vart[10];
+	clrscr();
+	cargar_art(vart);
+	printf("Vector de struct sin ordenar\n");
+	mostrar(vart);
+	ordenar_pu(vart);
+	printf("\nVector de struct ordenado por precio unitario\n");
+	mostrar(vart);
+	getch();
+	clrscr();
+	ordenar_cod(vart);
+	printf("\nVector de struct ordenado por c¢digo de art¡culo\n");
+	mostrar(vart);
+	getch();
+
+	}
+
+
+//funciones
+void cargar_art(struct articulo *vart )
+	{
+	int i;
+	float pu;
+	for(i=0;i<10;i++)
+		{
+		printf("\nIngrese el c¢digo de art¡culo: ");
+		scanf("%s", vart[i].codart);
+		printf("\nIngrese el precio unitario: ");
+		scanf("%f", &pu);
+		vart[i].pu=pu;
+		}
+	}
+
+void ordenar_pu(struct articulo *vart)
+	{
+	int i,j,posmin;
+	struct articulo aux;
+	for(i=0;i<9;i++)
+		{
+		posmin=i;
+		for(j=i+1;j<10;j++)
+			if(vart[j].pu<vart[posmin].pu)
+				posmin=j;
+		aux=vart[i];
+		vart[i]=vart[posmin];
+		vart[posmin]=aux;
+		}
+	}
+
+void ordenar_cod(struct articulo *vart)
+	{
+	int i,j,posmin;
+	struct articulo aux;
+	for(i=0;i<9;i++)
+		{
+		posmin=i;
+		for(j=i+1;j<10;j++)
+			if(strcmp(vart[j].codart,vart[posmin].codart)<0)
+				posmin=j;
+		aux=vart[i];
+		vart[i]=vart[posmin];
+		vart[posmin]=aux;
+		}
+	}
+
+
+void mostrar(struct articulo *vart )
+	{
+	int i;
+	for(i=0;i<10;i++)
+		{
+		printf("\nC¢digo de art¡culo: %s",vart[i].codart);
+		printf("\tPrecio unitario: %f", vart[i].pu);
+		}
+	}
+
+// fin funciones
